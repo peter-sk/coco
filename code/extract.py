@@ -5,12 +5,7 @@ import os
 import cv2
 from os.path import join
 import numpy as np
-from util import start, end, status, options
-
-def convert2relative(width, height, coords):
-    coords = list(coords)
-    coords[::2], coords[1::2] = (float(x)/width for x in coords[::2]), (float(x)/height for x in coords[::2])
-    return coords
+from util import start, end, status, options, convert2relative
 
 train_coco = COCO('data/person_keypoints_train2017.json')
 
@@ -50,7 +45,7 @@ for img_id, img_fname, width, height, meta in get_meta(train_coco):
         bbox = " ".join("{:.6f}".format(x) for x in convert2relative(width, height, m['bbox']))
         for pts in m['segmentation']:
             outline = " ".join("{:.6f}".format(x) for x in convert2relative(width, height, pts))
-            print("0 {} 100.000000 {}".format(bbox,outline),file=f)
+            f.write("0 {} 100.000000 {}".format(bbox,outline))
     f.close()
 end('')
 status(selected,"out of",total)
