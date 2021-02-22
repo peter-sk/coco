@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from pycocotools.coco import COCO
 import sys
 import os
@@ -37,7 +38,7 @@ def convert2relative(width, height, coords):
     coords[::2], coords[1::2] = (float(x)/width for x in coords[::2]), (float(x)/height for x in coords[::2])
     return coords
 
-train_coco = COCO('annotations/person_keypoints_train2017.json')
+train_coco = COCO('data/person_keypoints_train2017.json')
 
 def get_meta(coco):
     ids = list(coco.imgs.keys())
@@ -69,10 +70,10 @@ for img_id, img_fname, width, height, meta in get_meta(train_coco):
     if not takeit:
         continue
     selected += 1
-#    img = cv2.imread(join('train2017',img_fname))
-#    img = cv2.imwrite(join('selected',img_fname),img)
-    os.system("cp {} {}".format(join('train2017',img_fname),join('selected',img_fname)))
-    f = open(join('selected'," ".join(img_fname.split(".")[:-1])+".annotated.txt"),"wt")
+#    img = cv2.imread(join('data/train2017',img_fname))
+#    img = cv2.imwrite(join('data/selected',img_fname),img)
+    os.system("cp {} {}".format(join('data/train2017',img_fname),join('data/selected',img_fname)))
+    f = open(join('data/selected'," ".join(img_fname.split(".")[:-1])+".annotated.txt"),"wt")
     for m in meta:
         if m['iscrowd'] or m['area'] < 2000:
             continue
