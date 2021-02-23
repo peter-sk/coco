@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 import argparse
 import os
+import os.path
 import glob
 import random
 import time
 import cv2
 import numpy as np
 import sys
-from util import start, end, convert2relative, load_files
+from util import start, end, status, convert2relative, load_files
 
 old_path = sys.path
 os.chdir("darknet")
@@ -68,8 +69,7 @@ def image_detection(image_path, network, class_names, class_colors, thresh):
     image = darknet.draw_boxes(detections, image_resized, class_colors)
     return cv2.cvtColor(image, cv2.COLOR_BGR2RGB), detections
 
-def save_annotations(name, image, detections, class_names):
-    file_name = ".".join(name.split(".")[:-1]) + ".detected.txt"
+def save_annotations(file_name, image, detections, class_names):
     with open(file_name, "w") as f:
         for label, confidence, bbox in detections:
             height, width, _ = image.shape
@@ -89,9 +89,14 @@ def main():
     )
     images = load_files(args.input)
     for image_name in images:
+        file_name = ".".join(image_name.split(".")[:-1]) + ".detected.txt"
+        if os.path.exists(file_name):
+            start("Existing detection for", image_name)
+            status("SKIP")
+            continue
         start("Detecting", image_name)
         image, detections = image_detection(image_name, network, class_names, class_colors, args.thresh)
-        save_annotations(image_name, image, detections, class_names)
+        save_annotations(file_name, image, detections, class_names)
         end()
 
 if __name__ == "__main__":
