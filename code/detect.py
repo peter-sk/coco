@@ -87,17 +87,18 @@ def main():
         args.weights,
         batch_size=args.batch_size
     )
-    images = load_files(args.input)
-    for image_name in images:
-        file_name = ".".join(image_name.split(".")[:-1]) + ".detected.txt"
-        if os.path.exists(file_name):
-            start("Existing detection for", image_name)
-            status("SKIP")
-            continue
-        start("Detecting", image_name)
-        image, detections = image_detection(image_name, network, class_names, class_colors, args.thresh)
-        save_annotations(file_name, image, detections, class_names)
-        end()
+    for i in range(10):
+        images = load_files(args.input+"/"+str(i))
+        for image_name in images:
+            file_name = ".".join(image_name.split(".")[:-1]) + ".detected.txt"
+            if os.path.exists(file_name):
+                start("Existing detection for", image_name)
+                status("SKIP")
+                continue
+            start("Detecting", image_name)
+            image, detections = image_detection(image_name, network, class_names, class_colors, args.thresh)
+            save_annotations(file_name, image, detections, class_names)
+            end()
 
 if __name__ == "__main__":
     main()
