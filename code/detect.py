@@ -73,9 +73,10 @@ def save_annotations(name, image, detections, class_names):
     with open(file_name, "w") as f:
         for label, confidence, bbox in detections:
             height, width, _ = image.shape
-            bbox = " ".join("{:.6f}".format(x) for x in convert2relative(width, height, bbox))
+            relative_bbox = " ".join("{:.6f}".format(x) for x in convert2relative(width, height, bbox))
             if label == "person":
-                f.write("0 {} {:.6f}\n".format(bbox, float(confidence)))
+                #print(file_name,width,height,bbox,relative_bbox)
+                f.write("0 {} {:.6f}\n".format(relative_bbox, float(confidence)))
 
 def main():
     args = parser()

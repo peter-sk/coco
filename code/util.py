@@ -27,10 +27,17 @@ def file_size(file_name,end='\n'):
 def status(*msg,end='\n'):
     if options.verbosity > 0:
         print(' '.join(map(str,msg)),end=end)
+def get_started():
+    return started
 
 def convert2relative(width, height, coords):
     coords = list(coords)
-    coords[::2], coords[1::2] = (float(x)/width for x in coords[::2]), (float(x)/height for x in coords[::2])
+    coords[::2], coords[1::2] = (float(x)/width for x in coords[::2]), (float(x)/height for x in coords[1::2])
+    return coords
+
+def convert2absolute(width, height, coords):
+    coords = list(coords)
+    coords[::2], coords[1::2] = (float(x)*width for x in coords[::2]), (float(x)*height for x in coords[1::2])
     return coords
 
 def load_files(files_path,ext="jpg"):
