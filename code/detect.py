@@ -38,7 +38,7 @@ def parser():
                         help="path to config file")
     parser.add_argument("--data_file", default="darknet/cfg/coco.data",
                         help="path to data file")
-    parser.add_argument("--thresh", type=float, default=.25,
+    parser.add_argument("--thresh", type=float, default=.1,
                         help="remove detections with lower confidence")
     return parser.parse_args()
 
