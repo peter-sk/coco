@@ -34,9 +34,10 @@ def main():
                 dr = int(x+w/2),int(y+h/2)
                 #print(ul,dr)
                 bbox = cv2.rectangle(img,ul,dr,(255,255,0),3)
-                pts = convert2absolute(width,height,coords[6:])
-                pts = np.array(pts,dtype=np.int32).reshape((-1,1,2))
-                outline = cv2.polylines(img,[pts],True,(255,0,255),2)
+                if ext == "annotated":
+                    pts = convert2absolute(width,height,coords[6:])
+                    pts = np.array(pts,dtype=np.int32).reshape((-1,1,2))
+                    outline = cv2.polylines(img,[pts],True,(255,0,255),2)
             f.close()
             cv2.imwrite(join(img_fname.split(".jpg")[0]+"."+ext+".jpg"),img)
         end()
