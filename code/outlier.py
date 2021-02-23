@@ -8,13 +8,9 @@ import numpy as np
 from util import start, end, status, options, convert2absolute, load_files, get_started
 
 def main():
-    if len(sys.argv) > 1:
-        dirs = sys.argv[1:]
-    else:
-        dirs = "data/selected/"
-    for d in dirs:
+    for i in range(10):
         start("Detecting outlier candidates in",d)
-        txts = load_files(d,ext="detected.txt")
+        txts = load_files("data/selected/"+str(i),ext="detected.txt")
         total = 0
         selected = 0
         for txt_fname in txts:
