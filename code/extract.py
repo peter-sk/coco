@@ -25,8 +25,6 @@ def main():
     total = 0
     selected = 0
     for img_id, img_fname, width, height, meta in get_meta(train_coco):
-        if img_id > 10000:
-            continue
         total += 1
         if options.verbosity > 0 and total % 1000 == 0:
             print("(%d, %.1fs)" % (total,time.time()-get_started()), end='')
@@ -41,8 +39,8 @@ def main():
             continue
         #print(img_fname,width,height)
         selected += 1
-        os.system("cp {} {}".format(join('data/train2017',img_fname),join('data/selected',img_fname)))
-        f = open(join('data/selected'," ".join(img_fname.split(".")[:-1])+".annotated.txt"),"wt")
+        os.system("cp {} {}".format(join('data/train2017',img_fname),join('data/selected/{}'.format(img_id % 10),img_fname)))
+        f = open(join('data/selected/{}'.format(img_id % 10)," ".join(img_fname.split(".")[:-1])+".annotated.txt"),"wt")
         for m in meta:
             bbox = m['bbox']
             area = bbox[2]*bbox[3]/width/height
