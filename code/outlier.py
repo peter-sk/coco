@@ -9,7 +9,7 @@ from util import start, end, status, options, convert2absolute, load_files, get_
 
 def main():
     for i in range(10):
-        start("Detecting outlier candidates in",d)
+        start("Detecting outlier candidates in data/selected/",i)
         txts = load_files("data/selected/"+str(i),ext="detected.txt")
         total = 0
         selected = 0
