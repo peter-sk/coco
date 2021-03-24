@@ -1,6 +1,6 @@
 [submodule "darknet"]
 	path = darknet
-	url = https://github.com/AlexeyAB/darknet.git
+	url = https://github.com/peter-sk/darknet.git
 [submodule "image_outliers"]
 	path = image_outliers
 	url = https://gitlab.com/jonas_private/image_outliers.git
